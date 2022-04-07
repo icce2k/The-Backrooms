@@ -7,6 +7,9 @@ public class PlayerMovement : MonoBehaviour
     public float speed;
     public float rotationSpeed;
 
+    public bool isSprinting = false;
+    public float sprintMultiplier;
+
     private CharacterController characterController;
 
     private void Start()
@@ -23,6 +26,20 @@ public class PlayerMovement : MonoBehaviour
         Vector3 movementDirection = new Vector3(horizontal, 0, vertical);
         float magnitude = Mathf.Clamp01(movementDirection.magnitude) * speed;
         movementDirection.Normalize();
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            isSprinting = true;
+        }
+        else
+        {
+            isSprinting = false;
+        }
+
+        if (isSprinting == true)
+        {
+            movementDirection *= sprintMultiplier;
+        }
 
         characterController.SimpleMove(movementDirection * magnitude);
 

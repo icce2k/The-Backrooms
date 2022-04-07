@@ -1,33 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyMovement : MonoBehaviour
 {
-    public Transform player;
-    public float speed;
-    public float rotationSpeed;
+    private NavMeshAgent Mob;
+
+    public GameObject Player;
+
+    public float MobDistanceRun = 4.0f;
 
     private CharacterController characterController;
 
     private void Start()
     {
-        characterController = GetComponent<CharacterController>();
+        Mob = GetComponent<NavMeshAgent>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 movementDirection = player.position - transform.position;
-        float magnitude = Mathf.Clamp01(movementDirection.magnitude) * speed;
-        movementDirection.Normalize();
+        float distance = Vector3.Distance(transform.position, Player.transform.position);
 
-        characterController.SimpleMove(movementDirection * magnitude);
+        // Run towards player
 
-        if (movementDirection != Vector3.zero)
+        if (distance < MobDistanceRun)
         {
-            Quaternion toRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
+            Vector3 dirToPlayer = transform.position - Player.transform.position;
+
+            Vector3 newPos = transform.position - dirToPlayer;
+
+            Mob.SetDestination(newPos);
         }
     }
 }
