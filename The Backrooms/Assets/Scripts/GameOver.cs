@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameOver : MonoBehaviour
 {
-    public bool gameOver;
+    public static bool gameOver;
     // Start is called before the first frame update
     void Start()
     {
@@ -12,9 +12,9 @@ public class GameOver : MonoBehaviour
         Time.timeScale = 1f;
     }
 
-    public void OnTriggerEnter3D(Collider collision)
+    private void OnTriggerEnter(Collider collider)
     {
-        if (collision.tag == "Player")
+        if (collider.gameObject.tag == "Player")
         {
             gameOver = true;
             Time.timeScale = 0f;
