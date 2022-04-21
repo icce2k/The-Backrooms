@@ -8,7 +8,7 @@ public class Key : MonoBehaviour
     {
         PlayerInventory playerInventory = other.GetComponent<PlayerInventory>();
 
-        if (playerInventory != null)
+        if (other.gameObject.tag == "Player" && playerInventory != null)
         {
             playerInventory.Collected();
             gameObject.SetActive(false);

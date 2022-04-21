@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameOver : MonoBehaviour
 {
     public static bool gameOver;
+
     // Start is called before the first frame update
     void Start()
     {
