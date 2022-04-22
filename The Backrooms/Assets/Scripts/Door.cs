@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider collider)
-    {
-        PlayerInventory inventory = collider.GetComponent<PlayerInventory>();
+    public Animation hingehere;
+    public Component doorcollider;
 
-        if (collider.gameObject.tag == "Player" && inventory.numberOfKeys > 0)
+    private void OnTriggerStay(Collider other)
+    {
+        PlayerInventory playerInventory = other.GetComponent<PlayerInventory>();
+
+        if (Input.GetKey(KeyCode.E))
         {
-            print("test");
-            Destroy(gameObject);
+            hingehere.Play();
+            doorcollider.GetComponent<BoxCollider>().enabled = false;
         }
     }
 }
